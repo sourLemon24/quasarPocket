@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Hello World</h1>
+    <p>task1var1</p>
     <h3 class="text-grey-8">Pockets</h3>
     <EcommerceTable/>
   </div>
