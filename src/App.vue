@@ -2,6 +2,7 @@
   <div>
     <h1>Hello World</h1>
     <h3 class="text-grey-8">Pockets</h3>
+    <p>task2 title</p>
     <EcommerceTable/>
   </div>
 </template>
