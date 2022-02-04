@@ -5,6 +5,7 @@
     <p>task2 title</p>
     <p>Feature P-1</p>
     <p>commit</p>
+    <p>commit 1</p>
     <EcommerceTable/>
   </div>
 </template>
