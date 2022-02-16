@@ -1,15 +1,23 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+// import 'es6-promise/auto';
+import auth from "./modules/auth"
+// import axios from "axios"
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
+    error: {}
   },
   mutations: {
   },
-  actions: {
+  getters: {
   },
   modules: {
+    auth
   }
 })
+
+export default store
+

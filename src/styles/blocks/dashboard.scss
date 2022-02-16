@@ -1,0 +1,59 @@
+.dashboard-wrapper {
+  @extend %wrapper
+}
+
+.dashboard-wrapper {
+  display: block;
+}
+
+.main-screen {
+  width: 973px;
+  height: 1024px;
+  background-color: #fff;
+  display: block;
+  padding: 62px 0px 52px 82px;
+}
+
+.ecommerce-table {
+  // display: block;
+  width: 543px;
+  height: 456px;
+  border-collapse: collapse;
+  border-radius: 6px;
+  background-color: #F8F9FD;
+  color: #6E6B7B;
+  font-size: 12px;
+
+  thead {
+    border-radius: 6px 6px 0 0;
+    font-size: 14px;
+    text-align: left;
+    text-transform: uppercase;
+    background-color: #F3F2F7;
+    :nth-child(4) {
+      padding-top: 7px;
+    }
+    th {
+      font-weight: 600;
+
+      padding: 10px 0px 12px 32px;
+
+    }
+  }
+  
+
+
+
+
+  tbody {
+
+    font-weight: 400;
+  }
+  td {
+    padding: 19px 0px 19px 32px;
+    border-top: solid 1px #E9ECEF;
+    :nth-child(1) { //не работает(
+      font-weight: 600;
+    }
+  }
+}

@@ -1,14 +1,18 @@
 <template >
-<div class="row q-ml-xl">
-  <div class="col-8 flex justify-between">
-    <EcommerceTable/>
-    <SummaryTable/>
-  </div>
-  <div class="col row q-ml-xl">
-      <q-date v-model="model" range />
-      <div>
-      </div>
-  </div>
+<div>
+  <h3 class="text-grey-8 q-ml-xl">Pockets</h3>
+  <div class="row q-ml-xl">
+    <div class="col-8 flex justify-around">
+      <EcommerceTable/>
+      <SummaryTable/>
+    </div>
+    <div class="col row q-ml-xl">
+        <q-date v-model="model" range />
+        <div>
+        </div>
+    </div>
+</div>
+
 </div>
 </template>
 
