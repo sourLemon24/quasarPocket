@@ -1,23 +1,29 @@
 <template >
-<div class="row">
-  <div class="col-8">
+<div class="row q-ml-xl">
+  <div class="col-8 flex justify-between">
     <EcommerceTable/>
+    <SummaryTable/>
   </div>
-  <div>
+  <div class="col row q-ml-xl">
+      <q-date v-model="model" range />
+      <div>
+      </div>
   </div>
 </div>
 </template>
 
 <script>
 import EcommerceTable from '../components/EcommerceTable.vue'
+import SummaryTable from '../components/SummaryTable.vue'
 
 export default {
     components: {
-    EcommerceTable
+    EcommerceTable,
+        SummaryTable
   },
   data () {
     return {
-      title: 'Test select',
+      model: { from: '2020/07/08', to: '2020/07/17' },
       
     }
   },

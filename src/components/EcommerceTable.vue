@@ -1,31 +1,22 @@
 <template>
-<q-layout>
-    <q-page-container>
-    <q-page class="col">
-      <q-table
-        class="col-3"
-        :data="data"
-        :columns="columns"
-        row-key="name"
-        @row-click="rowClick"
-      >
-        <template v-slot:header-cell-addIcon="props">
-          <q-th :props="props">
-            <q-icon 
-              name="data_saver_on"
-              size="1.5em"
-              @click="addData"
-              style="cursor: pointer">
-            </q-icon>
-          </q-th>
-        </template>
-      </q-table>
-      <q-icon
-        name="api"
-      ></q-icon>
-    </q-page>
-  </q-page-container>
-</q-layout>
+  <q-table
+    class="eccomerce-table"
+    :data="data"
+    :columns="columns"
+    row-key="name"
+    @row-click="rowClick"
+    hide-bottom
+    separator="horizontal"
+  >
+    <template v-slot:header-cell-addIcon="props">
+      <q-th :props="props">
+        <q-btn
+          flat
+          icon="data_saver_on"
+          label="Add item" /> 
+      </q-th>
+    </template>
+  </q-table>
 </template>
 
 <script>
@@ -63,19 +54,15 @@ export default {
           align: 'center',
           field: 'addIcon',
           format:  val => `${val || ''}`,
-          headerStyle: 'background-color: pink'
         },        
-        {
-          name: 'add-item',
-          required: true,
-          label: 'add-item',
-          align: 'center',
-          field: 'add-item',
-          format: val => `${val  || ''}`,
-        },
       ],
       data: [
         {
+          date: '29.01.2022',
+          cathegory: 'Tehnology',
+          total: '11.4k',
+        },
+               {
           date: '29.01.2022',
           cathegory: 'Tehnology',
           total: '11.4k',
