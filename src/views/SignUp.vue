@@ -26,6 +26,14 @@
             <span>Я со всем согласен отпутите</span>
           </label>
         </div>
+        <ul class="text-red q-pa-none">
+          <ol>
+            {{this.$store.state.auth.error.username[0]}}
+          </ol>
+          <ol>
+            {{this.$store.state.auth.error.email[0]}}
+          </ol>
+        </ul>
         <div class="sign-up__button">
           <SignButton :ButtonTitle="ButtonTitle"></SignButton>
         </div>
@@ -54,9 +62,6 @@ export default {
     };
   },
   computed: {
-    error() {
-      return this.$store.getters.error
-    }
   },
   // watch: {
   //   error(e) {
@@ -75,7 +80,7 @@ export default {
         alert (`Пользователь ${this.username} с email:${this.email} успешно зарегистрирован`)
         this.$router.push("/auth/signin")
       } catch (e) {
-        alert(`${this.$store.state.auth.error.username} \n${this.$store.state.auth.error.email}`)
+        console.log(e)
       }
     }        
   },

@@ -1,78 +1,56 @@
-import axios from "axios"
-import { AUTH_LOGOUT, AUTH_REFRESH } from '@/store/modules/auth.js';
-// import accessToken from "@/store/index.js"
+import store from "@/store/"
+import { instance } from './instance.js';
 
-// if (accessToken) axios.defaults.headers.common['Authorization'] = `bearer ${accessToken}`
-
- async function signin ({email, password}) {
-  // eslint-disable-next-line no-useless-catch
-  try{
-    const resp = await axios({
-      url:'http://127.0.0.1:8001/api/auth/token/obtain/', 
-      data: {email, password}, 
-      method: 'POST',
-      skipAuth: true 
-    })
-    return resp
-  } catch (e) {
-    throw e
-  }
-}
-
-async function signup ({email, password, username}) {
-  // eslint-disable-next-line no-useless-catch
-  try {
-    const resp = await axios({
-      url:'http://127.0.0.1:8001/api/auth/register/', 
-      data: {username, email, password}, 
-      method: 'POST',
-      skipAuth: true 
-    })
-    return resp
-  } catch (e) {
-    throw e
-  }
-}
-
-async function refreshToken ({refreshToken}) {
-  // eslint-disable-next-line no-useless-catch
-  try {
-    const resp = await axios({
-      url:'http://127.0.0.1:8001/api/auth/token/refresh/', 
-      data: {refreshToken}, 
-      method: 'POST',
-      skipAuth: true 
-    })
-    return resp
-  } catch (e) {
-    throw e
-  }
-}
-
-axios.interceptors.response.use(
-  async (response) => {
-    const {status} = response;
-
-    if (status === 401) {
-      const accessToken = await this.$store.dispatch(AUTH_REFRESH);
-      if (accessToken) {
-        const _response = await axios({
-          // eslint-disable-next-line no-undef
-          ...config,
-          headres: {
-            common: {
-              ['Authorization']: `bearer ${accessToken}`
-            }
-          }
-        })
-        return _response
-      } else {
-        this.$store.commit(AUTH_LOGOUT)
-      }
-    }
-    return response;
+export default {
+  signin: async function ({email, password}) {
+      const resp = await instance.post('auth/token/obtain/', 
+        {email, password}, 
+        {skipAuth: true})      
+      return resp
   },
-  (error) => Promise.reject(error)
-)
+  
+  signup: async function ({email, password, username}) {
+    try {
+      const resp = await instance.post('auth/register/', 
+        {username, email, password}, 
+        {skipAuth: true} 
+      )
+      return resp
+    } catch (e) {
+      console.log('api/signup error catch', e)
+    }
+  },
+  
+  refreshToken: async function (refreshToken) {
+    try {
+      console.log('refreshToken in instance', refreshToken)
+      const resp = await instance.post('auth/token/refresh/', 
+        refreshToken,
+        {skipAuth: true} 
+      )
+      return resp
+    } catch (e) {
+      console.log('api/refreshToken error', e)
+    }
+  },
+  
+  getUser: () => {
+    try {
+      return instance.get('users/me/',  
+      )
+    } catch (e) {
+      console.log('api/getUser error catch', e)
+      store.dispatch('logout')
+    }
+  },
 
-export {signin, signup, refreshToken}
+  addCategory: async function (data) {
+    const resp = await instance.post('pockets/categories/', 
+      data,)      
+    return resp
+  },
+
+  getCategory: async function () {
+    return instance.get('pockets/categories/')
+  },  
+}

@@ -17,7 +17,8 @@
         <div class="sign-in__form sign-in__form_pswd">
           <SignInPassword v-model= "password"></SignInPassword>
         </div>
-        <div class="sign-up__button">                    
+        <div class="sign-up__button">
+        <p class="text-red">{{this.error.detail}}</p>
           <SignButton :ButtonTitle="ButtonTitle"></SignButton></div>
         <div class="sign-in__footer sign-footer">New on our platform? 
           <router-link to="/auth/signup" class="sign-create-account">Create an account</router-link>
@@ -32,13 +33,15 @@ import SignInEmail from "@/components/SignInEmail"
 import SignInPassword from "@/components/SignInPassword"
 import SignButton from "@/components/SignButton"
 import {mapState} from "vuex"
+
 export default {
+
   data() {
     return {
       ButtonTitle: "Login",
       email: "",
-      password: "",
-    };
+      password: "",   
+    }
   },
   name: "signin",
   computed: 
@@ -54,10 +57,10 @@ export default {
 
       try{
         await this.$store.dispatch("AUTH_REQUEST", formData)
-        alert("Вы вошли в систему")
+        // alert("Вы вошли в систему")
         this.$router.push("/")
       } catch (e) {
-        if(this.error.detail) alert('Неверно указаны почта или пароль')
+        // console.log(e.state)
       }
     },
   },
