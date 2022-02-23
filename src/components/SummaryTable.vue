@@ -2,12 +2,25 @@
   <div>
     <q-table
       class="summary-table"
-      :data="data"
+      :data="$store.state.categories.categories"
       :columns="columns"
       row-key="name"
       hide-bottom
       separator="vertical"
+      virtual-scroll
+      :rows-per-page-options="[0]"
     >
+      <template v-slot:body="props">
+        <q-tr 
+          :props="props"
+          :class="classIncome(props)">
+          <q-td
+            v-for="col in props.cols"
+            :key="col.id">
+            {{col.value}}
+          </q-td>
+        </q-tr>
+      </template>
       <template v-slot:top>
         <span>Summary</span>
 
@@ -75,7 +88,7 @@ import store from "@/store/"
             required: true,
             label: 'Категории',
             align: 'left',
-            field: 'expenses',
+            field: row => row.name,
             format: val => `${val}`,
           },
           {          
@@ -84,18 +97,9 @@ import store from "@/store/"
             label: 'Сумма',
             align: 'left',
             field: 'total',
-            format: val => `${val}`,}
+            format: val => val || 0,
+          }
         ],
-        data: [
-            {
-              expenses: 'Technology',
-              total: '999999K',
-            },
-            {
-              expenses: 'Games',
-              total: '999999K',
-            }
-        ]
       }
     },
     methods: {
@@ -109,6 +113,11 @@ import store from "@/store/"
         await store.dispatch("addCategory", data)
       } catch (e) {
         console.log('addCategory error', e)
+      }
+    },
+    classIncome(props) {
+      return {
+        'text-green': props.row.category_type === 'income'
       }
     }
   }

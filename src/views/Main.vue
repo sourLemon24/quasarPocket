@@ -24,20 +24,17 @@
 <script>
 import EcommerceTable from '../components/EcommerceTable.vue'
 import SummaryTable from '../components/SummaryTable.vue'
-import api from '@/api/index.js';
 import store from "@/store/"
 
 export default {
   
   async beforeRouteEnter(to, from, next) { 
     try {
-      store.state.auth.username = await api.getUser().then(r => r.data.username)
+      store.dispatch('getInitialData')
       // store.dispatch('getCategoty')
-      await api.getCategory()
-        .then(r => console.log('Результат получения категорий',r.data))
       next()
     } catch (e) {
-      console.log('error download username for Main component', e)
+      console.log('Ошибка предварительной загрузки данных на страницу', e)
     }
     
   },
