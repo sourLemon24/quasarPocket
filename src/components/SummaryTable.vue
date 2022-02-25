@@ -35,7 +35,16 @@
 
     </q-table>
 
-        <q-dialog v-model="showModalCategory">
+    
+    <BaseModal
+      newCategory
+      :buttonValue="typeCategory"
+      title="Добавить данные"
+      @click="addCategory"
+      :input-value="nameCategory"
+      :value="value">
+    </BaseModal>
+    <!-- <q-dialog v-model="showModalCategory">
       <q-card>
         <q-card-section>
           <div class="text-h6">Добавить данные</div>
@@ -68,17 +77,19 @@
              />
         </q-card-actions>
       </q-card>
-    </q-dialog>
+    </q-dialog> -->
 
   </div>
 </template>
 
 <script>
 import store from "@/store/"
+import BaseModal from "@/components/BaseComponents/BaseModal.vue"
 
   export default {
     data() {
       return {
+
         showModalCategory: false,
         typeCategory: null,
         nameCategory: null,
@@ -103,23 +114,27 @@ import store from "@/store/"
       }
     },
     methods: {
-    async addCategory() {
-      const data = {
-        name: this.nameCategory,
-        category_type: this.typeCategory
-      }
+      async addCategory() {
+        const data = {
+          name: this.nameCategory,
+          category_type: this.typeCategory
+        }
 
-      try{
-        await store.dispatch("addCategory", data)
-      } catch (e) {
-        console.log('addCategory error', e)
-      }
+        try{
+          await store.dispatch("addCategory", data)
+        } catch (e) {
+          console.log('addCategory error', e)
+        }
+      },
+      
+      classIncome(props) {
+        return {
+          'text-green': props.row.category_type === 'income'
+        }
+      },
     },
-    classIncome(props) {
-      return {
-        'text-green': props.row.category_type === 'income'
-      }
-    }
+    components: {
+      BaseModal,
   }
 }
 </script>

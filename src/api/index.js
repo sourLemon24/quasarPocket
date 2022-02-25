@@ -52,5 +52,9 @@ export default {
 
   getCategory: async function () {
     return instance.get('pockets/categories/')
-  },  
+  },
+  
+  getTransactions: async function () {
+    return instance.get('pockets/transactions/')
+  }
 }

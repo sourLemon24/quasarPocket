@@ -1,7 +1,4 @@
 import api from "@/api/index.js"
-// import axios from "axios"
-
-
 
 export default {
   state: {
