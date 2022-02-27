@@ -35,16 +35,7 @@
 
     </q-table>
 
-    
-    <BaseModal
-      newCategory
-      :buttonValue="typeCategory"
-      title="Добавить данные"
-      @click="addCategory"
-      :input-value="nameCategory"
-      :value="value">
-    </BaseModal>
-    <!-- <q-dialog v-model="showModalCategory">
+    <q-dialog v-model="showModalCategory">
       <q-card>
         <q-card-section>
           <div class="text-h6">Добавить данные</div>
@@ -77,14 +68,12 @@
              />
         </q-card-actions>
       </q-card>
-    </q-dialog> -->
+    </q-dialog>
 
   </div>
 </template>
 
 <script>
-import store from "@/store/"
-import BaseModal from "@/components/BaseComponents/BaseModal.vue"
 
   export default {
     data() {
@@ -107,8 +96,10 @@ import BaseModal from "@/components/BaseComponents/BaseModal.vue"
             required: true,
             label: 'Сумма',
             align: 'left',
-            field: 'total',
-            format: val => val || 0,
+            field: row => row.transactions_sum,
+            format: val => Number(val) || 0,
+            sortable: true,
+            sort: (a, b) => a - b
           }
         ],
       }
@@ -121,7 +112,7 @@ import BaseModal from "@/components/BaseComponents/BaseModal.vue"
         }
 
         try{
-          await store.dispatch("addCategory", data)
+          await this.$store.dispatch("addCategory", data)
         } catch (e) {
           console.log('addCategory error', e)
         }
@@ -133,9 +124,6 @@ import BaseModal from "@/components/BaseComponents/BaseModal.vue"
         }
       },
     },
-    components: {
-      BaseModal,
-  }
 }
 </script>
 

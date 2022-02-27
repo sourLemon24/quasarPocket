@@ -9,8 +9,6 @@
         <q-card-section class="q-pt-none">
           <div class="">
             <q-btn-toggle
-              :value="buttonValue"
-              @input="updateValue"
               toggle-color="primary"
               :options="[
                 {label: 'Расходы', value: 'expense'},
@@ -24,7 +22,6 @@
           <template v-if="newCategory">
             <q-input
               @input="updateInputValue"
-              :value="inputValue" 
               label="Категория" 
               />
           </template>
@@ -64,13 +61,8 @@
         type: String,
         default: ''
       },
-      inputValue: {
-        type: String,
-        requied: true
-      },
-      buttonValue: {
-        type: String,
-        requied: true
+      value: {
+        type: [String, Number, Boolean]
       },
       // для добавления категории передается ее название
       // в остальных случаях нужно выводить селект с 
@@ -85,12 +77,12 @@
       },
     },
     methods: {
-      updateValue(event) {
-        this.$emit('input', event.target.value)
+      updateInputValue(newInput) {
+        this.$emit('update:input', newInput)
       },
-      updateInputValue(event) {
-        this.$emit('input', event.target.inputValue)
-      }  
+      // updateButtonValue(newType) {
+      //   this.$emit('update:button', newType)
+      // },
     }
   }
 </script>

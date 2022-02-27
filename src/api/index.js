@@ -51,10 +51,16 @@ export default {
   },
 
   getCategory: async function () {
-    return instance.get('pockets/categories/')
+    return instance.get('pockets/categories/transactions-by-categories')
   },
   
   getTransactions: async function () {
     return instance.get('pockets/transactions/')
-  }
+  },
+
+  addTransaction: async function (data) {
+    const resp = await instance.post('pockets/transactions/', 
+      data,)      
+    return resp
+  },
 }
