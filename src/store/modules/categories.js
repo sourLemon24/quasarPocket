@@ -30,6 +30,28 @@ export default {
         throw e
       }
     },
+    deleteCategory: async ({state, dispatch}, data) => {
+      try{
+        await api.deleteCategory(data)
+        console.log('Была удалена категория', data)
+        dispatch('getInitialData') // хорошо бы избавиться от этого решения, так как генерируется лишний запрос
+        console.log('новый список категорий в сторе', state.categories)
+      } catch (e) {
+        console.log('Ошибка удаления категории', e)
+        throw e
+      }
+    },
+    editCategory: async ({state, dispatch}, data) => {
+      try{
+        await api.editCategory(data)
+        console.log('Была отредактирована категория', data)
+        dispatch('getInitialData') // хорошо бы избавиться от этого решения, так как генерируется лишний запрос
+        console.log('новый список категорий в сторе', state.categories)
+      } catch (e) {
+        console.log('Ошибка редактирования категории', e)
+        throw e
+      }
+    },
     updateCategory: ({commit, state}, data) => {
       const newCategory = state.categories.find(item => item.id == data.category.id)
       const index = state.categories.findIndex(item => item.id == data.category.id)

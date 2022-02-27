@@ -9,6 +9,7 @@
     separator="horizontal"
     virtual-scroll
     :rows-per-page-options="[0]"
+    :table-colspan="2"
   >
     <template v-slot:body="props">
       <q-tr 
@@ -26,7 +27,7 @@
         <q-td>
           <q-btn 
             flat 
-            style="color: #FF0080" 
+            style="color: green" 
             label="Edit" 
             @click="showModalEdit(props)"/>
         </q-td>
@@ -40,10 +41,14 @@
       </q-tr>
     </template>
     <template v-slot:header-cell-editCategory="props">
-      <q-th :props="props">
+      <q-th 
+        :props="props"
+        class="add-transaction-button"
+        colspan="100%">
         <q-btn
           flat
           icon="data_saver_on"
+          label="Add transaction"
           @click="showModal = true"/> 
       </q-th>
     </template>

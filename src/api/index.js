@@ -74,4 +74,15 @@ export default {
     data)      
     return resp
   },
+
+  deleteCategory: async function (data) {
+    const resp = await instance.delete(`pockets/categories/${data}`)      
+    return resp
+  },
+
+  editCategory: async function ({categoryId, ...data}) {
+    const resp = await instance.patch(`pockets/categories/${categoryId}/`,
+    data)      
+    return resp
+  },
 }
