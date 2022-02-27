@@ -13,7 +13,8 @@
       <template v-slot:body="props">
         <q-tr 
           :props="props"
-          :class="classIncome(props)">
+          :class="classIncome(props)"
+          @dblclick="showCategory(props)">
           <q-td
             v-for="col in props.cols"
             :key="col.id">
@@ -123,6 +124,9 @@
           'text-green': props.row.category_type === 'income'
         }
       },
+      showCategory(props) {
+        console.log('wait show category', props)
+      }
     },
 }
 </script>

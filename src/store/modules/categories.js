@@ -12,6 +12,10 @@ export default {
     },
     ADD_CATEGORY: (state, data) => {
       state.categories.unshift(data)
+    },
+    UPDATE_CATEGORIES: (state) => {
+      // state.categories = data
+      console.log('список категорий после обновление через сторе', state.categories)
     }
   },
   actions: {
@@ -26,7 +30,13 @@ export default {
         throw e
       }
     },
-
+    updateCategory: ({commit, state}, data) => {
+      const newCategory = state.categories.find(item => item.id == data.category.id)
+      const index = state.categories.findIndex(item => item.id == data.category.id)
+      newCategory.transactions_sum = +newCategory.transactions_sum + +data.amount 
+      const newCategories = state.categories.splice(index, 1, newCategory)
+      commit('UPDATE_CATEGORIES', newCategories) // работает, скорее всего можно написать лучше
+    }
   },
   getters : {
   }

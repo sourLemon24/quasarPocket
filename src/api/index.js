@@ -63,4 +63,15 @@ export default {
       data,)      
     return resp
   },
+
+  deleteTransaction: async function (data) {
+    const resp = await instance.delete(`pockets/transactions/${data}`)      
+    return resp
+  },
+
+  editTransaction: async function ({transactionId, ...data}) {
+    const resp = await instance.patch(`pockets/transactions/${transactionId}/`,
+    data)      
+    return resp
+  },
 }
