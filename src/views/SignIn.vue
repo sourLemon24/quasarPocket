@@ -12,55 +12,52 @@
       </div>
       <form @submit.prevent="signin">
         <div class="sign-in__form">
-          <SignInEmail v-model = "email"></SignInEmail>
+          <SignInEmail v-model = "signInData.email"></SignInEmail>
         </div>
         <div class="sign-in__form sign-in__form_pswd">
-          <SignInPassword v-model= "password"></SignInPassword>
+          <SignInPassword v-model= "signInData.password"></SignInPassword>
         </div>
         <div class="sign-up__button">
-        <p class="text-red">{{this.error.detail}}</p>
+        <p class="text-red" v-if='error'>{{this.error.detail}}</p>
           <SignButton :ButtonTitle="ButtonTitle"></SignButton></div>
         <div class="sign-in__footer sign-footer">New on our platform? 
           <router-link to="/auth/signup" class="sign-create-account">Create an account</router-link>
         </div>
-        </form>
+      </form>
     </div> 
   </div>
 </template>
 
 <script>
-import SignInEmail from "@/components/SignInEmail"
-import SignInPassword from "@/components/SignInPassword"
-import SignButton from "@/components/SignButton"
-import {mapState} from "vuex"
+import SignInEmail from '@/components/SignInEmail'
+import SignInPassword from '@/components/SignInPassword'
+import SignButton from '@/components/SignButton'
+import {mapState} from 'vuex'
 
 export default {
 
   data() {
     return {
-      ButtonTitle: "Login",
-      email: "",
-      password: "",   
+      ButtonTitle: 'Login',
+      signInData: {
+        email: '',
+        password: '',
+      }   
     }
   },
-  name: "signin",
+  name: 'signin',
   computed: 
     mapState({
       error: state => state.auth.error
     }),
   methods: {
     async signin() {
-      const formData = {
-        email: this.email,
-        password: this.password
-      }
-
       try{
-        await this.$store.dispatch("AUTH_REQUEST", formData)
-        // alert("Вы вошли в систему")
+        await this.$store.dispatch("AUTH_REQUEST", this.signInData)
+        // alert('Вы вошли в систему')
         this.$router.push("/")
       } catch (e) {
-        // console.log(e.state)
+        console.log('Ошибка на уровне компонента', e)
       }
     },
   },

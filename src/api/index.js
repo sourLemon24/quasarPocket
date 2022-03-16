@@ -2,30 +2,27 @@ import store from "@/store/"
 import { instance } from './instance.js';
 
 export default {
-  signin: async function ({email, password}) {
-      const resp = await instance.post('auth/token/obtain/', 
-        {email, password}, 
-        {skipAuth: true})      
-      return resp
+  signin: async function (data) {
+    const resp = await instance.post('auth/token/obtain/', 
+      data, 
+      {skipAuth: true})
+    console.log('sign in resp', resp)
+    return resp
   },
   
-  signup: async function ({email, password, username}) {
-    try {
+  signup: async function (data) {
       const resp = await instance.post('auth/register/', 
-        {username, email, password}, 
+        data, 
         {skipAuth: true} 
       )
       return resp
-    } catch (e) {
-      console.log('api/signup error catch', e)
-    }
   },
   
-  refreshToken: async function (refreshToken) {
+  refreshToken: async function (data) {
     try {
-      console.log('refreshToken in instance', refreshToken)
+      console.log('refreshToken in instance', data)
       const resp = await instance.post('auth/token/refresh/', 
-        refreshToken,
+        data,
         {skipAuth: true} 
       )
       return resp
@@ -54,8 +51,10 @@ export default {
     return instance.get('pockets/categories/transactions-by-categories')
   },
   
-  getTransactions: async function () {
-    return instance.get('pockets/transactions/')
+  getTransactions: async function (limit = 1000, offset = 0, start_date = '1900-01-01', end_date = '2100-01-01') {
+    const params = {limit, offset, start_date, end_date}
+    return instance.get('pockets/transactions/',
+      {params})
   },
 
   addTransaction: async function (data) {

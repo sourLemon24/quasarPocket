@@ -8,7 +8,7 @@ export default {
   state: {
     username: "",
     email: "",
-    error: {},
+    error: null,
     accessToken: '',
     refreshToken: '',
     accessTokenExpires: null,
@@ -30,21 +30,19 @@ export default {
     },
   },
   actions: {
-    AUTH_REQUEST: async ({commit, dispatch}, {email, password}) => {
+    AUTH_REQUEST: async ({commit}, data) => {
       try{
-        const resp = await api.signin({email, password})
+        const resp = await api.signin(data)
         commit('AUTH_SUCSESS', resp)
       } catch (e) {
-        console.log('ошибка запроса входа в систему')
+        console.log('ошибка запроса входа в систему на уровне store', e)
         commit('GET_ERROR', e.response.data)
-        dispatch('logout')
-        throw e
       }
     },
 
-    AUTH_REG: async ({commit}, {email, password, username}) => {
+    AUTH_REG: async ({commit}, data) => {
       try {
-        await api.signup({email, password, username})
+        await api.signup(data)
       } catch (e) {
         commit('GET_ERROR', e.response.data)
         throw e
@@ -55,9 +53,9 @@ export default {
       commit('CLEAR_USER_DATA')
     },
 
-    authRefresh: async ({commit,dispatch}, refreshToken) => {
+    authRefresh: async ({commit,dispatch}, data) => {
       try{
-        const resp = await api.refreshToken(refreshToken)
+        const resp = await api.refreshToken(data)
         commit('AUTH_SUCSESS', resp)
       } catch (e) {
         console.log('Ошибка при обновлении токена', e)

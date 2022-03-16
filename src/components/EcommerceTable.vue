@@ -49,92 +49,51 @@
           flat
           icon="data_saver_on"
           label="Add transaction"
-          @click="showModal = true"/> 
+          @click="showModalAddTransaction = true"/> 
       </q-th>
     </template>
   </q-table>
 
-  <q-dialog v-model="showModal">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">Добавить данные</div>
-        </q-card-section>
+    <BaseModal
+      transaction
+      :showModal.sync="showModalAddTransaction"
+      title="Добавить данные"
+      btnLabel="Добавить"
+      :typeCategory.sync="typeCategory"
+      :transactionDate.sync="transactionDate"
+      :amount.sync="amount"
+      :categoryId.sync="categoryId"
+      :optionsSelect="options"
+      @clearModalValue="clearModalValue"
+      @click="addTransaction"
+    />
 
-        <q-card-section class="q-pt-none">
-          <div class="">
-            <q-btn-toggle
-              v-model="typeCategory"
-              toggle-color="primary"
-              :options="[
-                {label: 'Расходы', value: 'expense'},
-                {label: 'Доходы', value: 'income'},
-              ]"
-            />
-          </div>
-        </q-card-section>
-
-        <q-card-section>
-          <q-input v-model="transactionDate" label="Дата" hint="YYYY-MM-DD"/>
-          <q-select 
-          v-model="categoryId" 
-          :options="options"
-          map-options
-          emit-value
-          label="Категория" />
-          <q-input v-model="amount" label="Сумма" />
-        </q-card-section>
-
-        <q-card-actions>
-          <q-btn 
-            flat 
-            label="Добавить" 
-            color="primary" 
-            v-close-popup
-            @click="addTransaction"
-             />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
-    <q-dialog 
-      v-model="showModalEditView"
-      @hide="clearModalValue">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">Редактировать транзакцию</div>
-        </q-card-section>
-
-        <q-card-section>
-          <q-input v-model="transactionDate" label="Дата" hint="YYYY-MM-DD"/>
-          <q-select 
-          v-model="categoryId" 
-          :options="options"
-          map-options
-          emit-value
-          label="Категория" />
-          <q-input v-model="amount" label="Сумма" />
-        </q-card-section>
-
-        <q-card-actions>
-          <q-btn 
-            flat 
-            label="Редактировать" 
-            color="primary" 
-            v-close-popup
-            @click="editTransaction"
-             />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+    <BaseModal
+      transaction
+      :showModal.sync="showModalEditTransaction"
+      title="Редактировать транзакцию"
+      btnLabel="Изменить"
+      :typeCategory.sync="typeCategory"
+      :transactionDate.sync="transactionDate"
+      :amount.sync="amount"
+      :categoryId.sync="categoryId"
+      :optionsSelect="options"
+      @clearModalValue="clearModalValue"
+      @click="editTransaction"
+    />
 </div>
 </template>
 
 <script>
+import { required } from 'vuelidate/lib/validators'
+import BaseModal from '@/components/BaseComponents/BaseModal.vue'
 
 export default {
+  components: {BaseModal},
   data () {
     return {
-      showModal: false,
-      showModalEditView: false,
+      showModalAddTransaction: false,
+      showModalEditTransaction: false,
       typeCategory: null,
       transactionDate: null,
       categoryId: null,
@@ -211,8 +170,6 @@ export default {
         amount: this.amount || undefined,
         transactionId: this.transactionId
       }
-      
-
       try{
         await this.$store.dispatch("editTransaction", data)
       } catch (e) {
@@ -225,7 +182,9 @@ export default {
       }
     },
     showModalEdit(props) {
-      this.showModalEditView = true,
+      console.log('props', props)
+      this.showModalEditTransaction = true,
+      this.typeCategory = props.row.category.category_type
       this.transactionDate = props.row.transaction_date
       this.amount = props.row.amount
       this.categoryId = props.row.category.id
@@ -238,22 +197,23 @@ export default {
       this.transactionId = null
     }
   },
-  computed: { 
+  computed: {
     options() {
       return this.$store.state.categories.categories
-      .map(item => {
-        return {
+      .map(item => ({
           label: item.name,
           value: item.id,
           category: item.category_type
-          }
-      })
+      }))
       .filter(item => {
         if(this.typeCategory == null) return item
         return item.category == this.typeCategory
       })
     }
-  }
+  },
+  validations: {
+    date: { required }
+  }, 
 }
 </script>
 

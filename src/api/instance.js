@@ -7,6 +7,7 @@ const instance = axios.create({
 instance.defaults.headers.post['Content-Type'] = 'application/json'
 
 instance.interceptors.request.use(async (config) => {
+  // console.log('request config', config)
   if(config.skipAuth) return config;
 
   const accessToken = await requestValidAccessToken()
@@ -26,6 +27,7 @@ instance.interceptors.request.use(async (config) => {
 
 instance.interceptors.response.use(
   async (response) => {
+    // console.log('response', response)
     const {status} = response;
     if (status === 401) {
         this.$store.dispatch('logout')

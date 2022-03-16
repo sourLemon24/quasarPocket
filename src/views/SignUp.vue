@@ -12,13 +12,13 @@
       </div>
       <form @submit.prevent="signup">
         <div class="sign-up__form sign-up__form_user" >
-          <SignInUsername v-model = "username"></SignInUsername>
+          <SignInUsername v-model = "signUpData.username"></SignInUsername>
         </div>
         <div class="sign-up__form">
-          <SignInEmail v-model = "email"></SignInEmail>
+          <SignInEmail v-model = "signUpData.email"></SignInEmail>
         </div>
         <div class="sign-up__form sign-up__form_hidden-link">
-          <SignInPassword v-model= "password"></SignInPassword>
+          <SignInPassword v-model= "signUpData.password"></SignInPassword>
         </div>
         <div class="sign-up__checkbox">
           <label>
@@ -26,14 +26,16 @@
             <span>Я со всем согласен отпутите</span>
           </label>
         </div>
-        <ul class="text-red q-pa-none">
-          <ol>
-            {{this.$store.state.auth.error.username[0]}}
-          </ol>
-          <ol>
-            {{this.$store.state.auth.error.email[0]}}
-          </ol>
-        </ul>
+        <template v-if="$store.state.auth.error">
+          <ul class="text-red q-pa-none">
+            <ol>
+              {{$store.state.auth.error.username[0]}}
+            </ol>
+            <ol>
+              {{$store.state.auth.error.email[0]}}
+            </ol>
+          </ul>
+        </template>
         <div class="sign-up__button">
           <SignButton :ButtonTitle="ButtonTitle"></SignButton>
         </div>
@@ -46,19 +48,21 @@
 </template>
 
 <script>
-import SignInEmail from "@/components/SignInEmail"
-import SignInPassword from "@/components/SignInPassword"
-import SignInUsername from "@/components/SignInUsername"
-import SignButton from "@/components/SignButton"
+import SignInEmail from '@/components/SignInEmail'
+import SignInPassword from '@/components/SignInPassword'
+import SignInUsername from '@/components/SignInUsername'
+import SignButton from '@/components/SignButton'
 // import {mapMutations} from "vuex"
 
 export default {
   data() {
     return {
-      ButtonTitle: "Sign Up",
-      username: "",
-      email: "",
-      password: "",
+      ButtonTitle: 'Sign Up',
+      signUpData: {
+        username: '',
+        email: '',
+        password: '',
+      }
     };
   },
   computed: {
@@ -70,21 +74,16 @@ export default {
   // },
   methods: { 
     async signup() {
-      const formData = {
-        username: this.username,
-        email: this.email,
-        password: this.password,
-      }
       try{
-        await this.$store.dispatch("AUTH_REG", formData)
-        alert (`Пользователь ${this.username} с email:${this.email} успешно зарегистрирован`)
-        this.$router.push("/auth/signin")
+        await this.$store.dispatch('AUTH_REG', this.signUpData)
+        alert (`Пользователь ${this.signUpData.username} с email:${this.signUpData.email} успешно зарегистрирован`)
+        this.$router.push('/auth/signin')
       } catch (e) {
-        console.log(e)
+        console.log('sign up error', e)
       }
     }        
   },
-  name: "app",
+  name: 'app',
   components: {
     SignInEmail, SignInPassword, SignInUsername, SignButton
   }

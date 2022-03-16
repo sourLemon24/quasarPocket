@@ -1,6 +1,9 @@
 <template>
   <div>
-    <q-dialog v-model="showModal">
+    <q-dialog
+      @input="updateShowModal" 
+      :value="showModal"
+      @hide="clearModalValue">
       <q-card>
         <q-card-section>
           <div class="text-h6">{{title}}</div>
@@ -10,6 +13,8 @@
           <div class="">
             <q-btn-toggle
               toggle-color="primary"
+              @input="updateTypeCategory"
+              :value="typeCategory"
               :options="[
                 {label: 'Расходы', value: 'expense'},
                 {label: 'Доходы', value: 'income'},
@@ -19,35 +24,59 @@
         </q-card-section>
 
         <q-card-section>
-          <template v-if="newCategory">
-            <q-input
-              @input="updateInputValue"
-              label="Категория" 
-              />
+          <template v-if="transaction">
+            <q-input  
+              @input="updateTransactionDate"
+              :value="transactionDate" 
+              label="Дата"
+              hint="YYYY-MM-DD"/>
+            <q-select  
+              @input="updateCategoryId"
+              :value="categoryId" 
+              :options="optionsSelect" 
+              label="Категория"
+              map-options
+              emit-value />
+            <q-input  
+              @input="updateAmount"
+              :value="amount"  
+              label="Сумма" />
           </template>
           <template v-else>
-            <q-input  
-              v-model="date" 
-              label="Дата"
-              hint="YYYY-MM-DD"
-              :dense="dense" />
-            <q-select  
-              v-model="amount" 
-              label="Категория" />
-            <q-input  
-              v-model="amount" 
-              label="Сумма" />
+            <q-input
+            @input="updateNameCategory"
+            :value="nameCategory"
+            label="Категория" 
+            />
           </template>
         </q-card-section>
 
         <q-card-actions>
-          <q-btn 
+          <template v-if="editCategory">
+            <q-btn 
             flat 
-            label="Добавить" 
+            label="Изменить" 
+            color="primary" 
+            v-close-popup
+            @click="editButtonEvent"
+             />
+            <q-btn 
+            flat 
+            label="Удалить" 
+            color="primary" 
+            v-close-popup
+            @click="deleteButtonEvent"
+             />
+          </template>
+          <template v-else>
+            <q-btn 
+            flat 
+            :label="btnLabel" 
             color="primary" 
             v-close-popup
             v-on="$listeners"
              />
+          </template>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -61,13 +90,15 @@
         type: String,
         default: ''
       },
-      value: {
-        type: [String, Number, Boolean]
+      btnLabel: {
+        type: String,
+        default: ''
       },
-      // для добавления категории передается ее название
-      // в остальных случаях нужно выводить селект с 
-      // value: category.id и label: category.name из store
-      newCategory: {
+      editCategory: {
+        type: Boolean,
+        default: false
+      },
+      transaction: {
         type: Boolean,
         default: false
       },
@@ -75,15 +106,61 @@
         type: Boolean,
         default: false
       },
+      typeCategory: {
+        type: String,
+        default: ''
+      },
+      nameCategory: {
+        type: String,
+        default: ''
+      },
+      transactionDate: {
+        type: String,
+        default: ''
+      },
+      amount: {
+        type: String,
+        default: ''
+      },
+      categoryId: {
+        type: Number,
+        default: 0
+      },
+      optionsSelect: {
+        type: Array,
+        default: null
+      }
     },
     methods: {
-      updateInputValue(newInput) {
-        this.$emit('update:input', newInput)
+      updateTypeCategory(value) {
+        this.$emit('update:typeCategory', value)
       },
-      // updateButtonValue(newType) {
-      //   this.$emit('update:button', newType)
-      // },
-    }
+      updateNameCategory(value) {
+        this.$emit('update:nameCategory', value)
+      },
+      updateTransactionDate(value) {
+        this.$emit('update:transactionDate', value)
+      },
+      updateAmount(value) {
+        this.$emit('update:amount', value)
+      },
+      updateCategoryId(value) {
+        this.$emit('update:categoryId', value)
+      },
+      updateShowModal(value) {
+        this.$emit('update:showModal', value)
+      },
+      editButtonEvent() {
+        this.$emit('editButtonClick')
+      },
+      deleteButtonEvent() {
+        this.$emit('deleteButtonClick')
+      },
+      clearModalValue() {
+        this.$emit('clearModalValue')
+      }
+    },
+
   }
 </script>
 

@@ -11,7 +11,7 @@ export default {
       console.log('транзакции, полученыые от сервера через cocтояние', state.transactions)
     },
     ADD_TRANSACTION: (state, data) => {
-      state.transactions.unshift(data)
+      state.transactions.splice(0, 0, data)
     }
   },
   actions: {

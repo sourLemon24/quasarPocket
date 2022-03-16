@@ -37,91 +37,35 @@
 
     </q-table>
 
-    <q-dialog v-model="showModalAddCategory">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">Добавить данные</div>
-        </q-card-section>
+    <BaseModal
+      :showModal.sync="showModalAddCategory"
+      title="Добавить данные"
+      btnLabel="Добавить"
+      :typeCategory.sync="typeCategory"
+      :nameCategory.sync="nameCategory"
+      @clearModalValue="clearModalValue"
+      @click="addCategory"
+    />
 
-        <q-card-section class="q-pt-none">
-          <div class="">
-            <q-btn-toggle
-              v-model="typeCategory"
-              toggle-color="primary"
-              :options="[
-                {label: 'Расходы', value: 'expense'},
-                {label: 'Доходы', value: 'income'},
-              ]"
-            />
-          </div>
-        </q-card-section>
-
-        <q-card-section>
-          <q-input v-model="nameCategory" label="Категория" />
-        </q-card-section>
-
-        <q-card-actions>
-          <q-btn 
-            flat 
-            label="Добавить" 
-            color="primary" 
-            v-close-popup
-            @click="addCategory"
-             />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
-
-    <q-dialog 
-      v-model="showModalEditCategory"
-      @hide="clearModalValue">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">Редактировать данные</div>
-        </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          <div class="">
-            <q-btn-toggle
-              v-model="typeCategory"
-              toggle-color="primary"
-              :options="[
-                {label: 'Расходы', value: 'expense'},
-                {label: 'Доходы', value: 'income'},
-              ]"
-            />
-          </div>
-        </q-card-section>
-
-        <q-card-section>
-          <q-input v-model="nameCategory" label="Категория" />
-        </q-card-section>
-
-        <q-card-actions>
-          <q-btn 
-            flat 
-            label="Редактировать" 
-            color="primary" 
-            v-close-popup
-            @click="editCategory"
-             />
-          <q-btn 
-            flat 
-            label="Удалить" 
-            color="primary" 
-            v-close-popup
-            @click="deleteCategory"
-             />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+    <BaseModal
+      editCategory
+      :showModal.sync="showModalEditCategory"
+      @clearModalValue="clearModalValue"
+      title="Редактировать данные"
+      :typeCategory.sync="typeCategory"
+      :nameCategory.sync="nameCategory"
+      @editButtonClick="editCategory"
+      @deleteButtonClick="deleteCategory"
+    />
 
   </div>
 </template>
 
 <script>
+import BaseModal from '@/components/BaseComponents/BaseModal.vue'
 
   export default {
+    components: {BaseModal},
     data() {
       return {
         showModalEditCategory: false,

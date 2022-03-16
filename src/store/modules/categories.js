@@ -11,7 +11,7 @@ export default {
       console.log('категории, полученыые от сервера через cocтояние', state.categories)
     },
     ADD_CATEGORY: (state, data) => {
-      state.categories.unshift(data)
+      state.categories.splice(0, 0, data)
     },
     UPDATE_CATEGORIES: (state) => {
       // state.categories = data
