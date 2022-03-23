@@ -6,7 +6,7 @@
     </div>
     <div class="col flex justify-center items-center">
       <q-avatar color="orange" text-color="white" font-size="40px" icon="account_circle" />
-      <h6 class="text-grey-8 q-ml-sm">Hi, {{this.$store.state.auth.username}}</h6>
+      <h6 class="text-grey-8 q-ml-sm">Hi, {{$store.state.auth.username}}</h6>
     </div>
   </div>
   <div class="row q-ml-xl">
@@ -18,13 +18,23 @@
       <q-date v-model="model" range />
     </div>
   </div>
+  <div class="row q-ml-xl">
+    <div class="col-8">
+      <widgets/>
+    </div>
+    <div class="col q-ml-xl">
+      Global
+    </div>
+  </div>
 </div>
+
 </template>
 
 <script>
 import EcommerceTable from '../components/EcommerceTable.vue'
 import SummaryTable from '../components/SummaryTable.vue'
 import store from "@/store/"
+import Widgets from '../components/Widgets.vue'
 
 export default {
   
@@ -41,7 +51,8 @@ export default {
 
   components: {
     EcommerceTable,
-        SummaryTable
+        SummaryTable,
+        Widgets
   },
   data () {
     return {

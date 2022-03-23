@@ -57,6 +57,21 @@ export default {
       {params})
   },
 
+  getWidgets: async function () {
+    return instance.get('pockets/widgets')
+  },
+
+  addWidget: async function (data) {
+    const resp = await instance.post('pockets/widgets/', 
+      data,)      
+    return resp
+  },
+  
+  deleteWidget: async function (data) {
+    const resp = await instance.delete(`pockets/widgets/${data}/`)      
+    return resp
+  },
+
   addTransaction: async function (data) {
     const resp = await instance.post('pockets/transactions/', 
       data,)      

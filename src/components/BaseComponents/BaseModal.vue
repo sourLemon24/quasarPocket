@@ -5,12 +5,46 @@
       :value="showModal"
       @hide="clearModalValue">
       <q-card>
-        <q-card-section>
+        <q-card-section class="flex">
           <div class="text-h6">{{title}}</div>
+          <div v-if="widget">
+            <q-btn 
+              flat 
+              icon="brush"
+              size="10px">
+              <q-menu
+                anchor="top right"
+                self="top left">
+                <q-color
+                  @input="updateColor"
+                  :value="color"
+                  flat
+                  dark
+                  bordered
+                  no-header
+                  no-footer
+                  default-view="palette"
+                  :palette="['#E5F5FF', '#E4F6E8', '#FFF0E9', '#F7F4FF',
+                    '#FFE5E5', '#E4E8F6', '#FCE9FF', '#EDEDED']"
+                />
+              </q-menu>
+            </q-btn>
+          </div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          <div class="">
+          <div v-if="widget">
+            <q-btn-toggle
+              toggle-color="primary"
+              @input="updateCriterion"
+              :value="criterion"
+              :options="[
+                {label: 'Больше', value: 'more'},
+                {label: 'Меньше', value: 'less'},
+              ]"
+            />
+          </div>
+          <div v-else>
             <q-btn-toggle
               toggle-color="primary"
               @input="updateTypeCategory"
@@ -41,6 +75,30 @@
               @input="updateAmount"
               :value="amount"  
               label="Сумма" />
+          </template>
+          <template v-else-if="widget">
+            <q-select  
+              @input="updateCategoryId"
+              :value="categoryId" 
+              :options="optionsSelect" 
+              label="Категория"
+              map-options
+              emit-value />
+            <q-input  
+              @input="updateLimit"
+              :value="limit"  
+              label="Лимит" />
+            <q-select  
+              @input="updateValidity"
+              :value="validity" 
+              :options="[
+                {label: 'День', value: 'day'},
+                {label: 'Неделя', value: 'week'},
+                {label: 'Месяц', value: 'month'},
+              ]" 
+              label="Срок"
+              map-options
+              emit-value />
           </template>
           <template v-else>
             <q-input
@@ -102,6 +160,22 @@
         type: Boolean,
         default: false
       },
+      widget: {
+        type: Boolean,
+        default: false
+      },
+      criterion: {
+        type: String,
+        default: ''
+      },
+      limit: {
+        type: String,
+        default: ''
+      },
+      validity: {
+        type: String,
+        default: ''
+      },
       showModal: {
         type: Boolean,
         default: false
@@ -124,11 +198,15 @@
       },
       categoryId: {
         type: Number,
-        default: 0
+        default: null
       },
       optionsSelect: {
         type: Array,
         default: null
+      },
+      color: {
+        type: String,
+        default: ''
       }
     },
     methods: {
@@ -149,6 +227,22 @@
       },
       updateShowModal(value) {
         this.$emit('update:showModal', value)
+      },
+      updateColor(value) {
+        console.log('update color value', value)
+        this.$emit('update:color', value)
+      },
+      updateCriterion(value) {
+        console.log('update criterion value', value)
+        this.$emit('update:criterion', value)
+      },
+      updateLimit(value) {
+        console.log('update limit value', value)
+        this.$emit('update:limit', value)
+      },
+      updateValidity(value) {
+        console.log('update validity value', value)
+        this.$emit('update:validity', value)
       },
       editButtonEvent() {
         this.$emit('editButtonClick')

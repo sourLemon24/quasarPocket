@@ -54,21 +54,20 @@
     </template>
   </q-table>
 
-    <BaseModal
+    <base-modal
       transaction
       :showModal.sync="showModalAddTransaction"
       title="Добавить данные"
-      btnLabel="Добавить"
+      btn-label="Добавить"
       :typeCategory.sync="typeCategory"
       :transactionDate.sync="transactionDate"
       :amount.sync="amount"
       :categoryId.sync="categoryId"
-      :optionsSelect="options"
       @clearModalValue="clearModalValue"
       @click="addTransaction"
     />
 
-    <BaseModal
+    <base-modal
       transaction
       :showModal.sync="showModalEditTransaction"
       title="Редактировать транзакцию"
@@ -86,7 +85,7 @@
 
 <script>
 import { required } from 'vuelidate/lib/validators'
-import BaseModal from '@/components/BaseComponents/BaseModal.vue'
+import BaseModal from './BaseComponents/BaseModal.vue'
 
 export default {
   components: {BaseModal},

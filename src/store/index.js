@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import auth from "./modules/auth"
 import categories from "./modules/categories"
 import transactions from "./modules/transactions"
+import widgets from "./modules/widgets"
 import api from "@/api/index.js"
 
 Vue.use(Vuex)
@@ -19,7 +20,7 @@ const store = new Vuex.Store({
   getters: {
   },
   modules: {
-    auth, categories, transactions
+    auth, categories, transactions, widgets
   },
   actions: {
     getInitialData: async ({commit}) => {
@@ -30,6 +31,8 @@ const store = new Vuex.Store({
         commit('GET_CATEGORIES', categories)
         const transactions = await api.getTransactions().then(r => r.data)
         commit('GET_TRANSACTIONS', transactions)
+        const widgets = await api.getWidgets().then(r => r.data)
+        commit('GET_WIDGETS', widgets)
       }
       catch (e) {
         console.log('Ошибка в store/getInitialData', e)

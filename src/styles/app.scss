@@ -72,3 +72,23 @@ a {
     flex-wrap: nowrap;
   }
 }
+
+.widget-card {
+  width: 305px;
+  height: 153px;
+}
+
+.widgets-wrapper {
+  height: 350px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.add-widget-buttons {
+  height: 305px;
+  width: 222px;
+}
+
+.color-picker {
+  width: 200px;
+}
