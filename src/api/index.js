@@ -47,12 +47,14 @@ export default {
     return resp
   },
 
-  getCategory: async function () {
-    return instance.get('pockets/categories/transactions-by-categories')
+  getCategories: async function ({start_date = '1900-01-01', end_date = '2100-01-01'}) {
+    const params = {start_date, end_date}
+    return instance.get('pockets/categories/transactions-by-categories', {params})
   },
   
-  getTransactions: async function (limit = 1000, offset = 0, start_date = '1900-01-01', end_date = '2100-01-01') {
+  getTransactions: async function ({limit = 1000, offset = 0, start_date = '1900-01-01', end_date = '2100-01-01'}) {
     const params = {limit, offset, start_date, end_date}
+    console.log('params', params)
     return instance.get('pockets/transactions/',
       {params})
   },

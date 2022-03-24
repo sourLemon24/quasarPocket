@@ -15,7 +15,7 @@
       <SummaryTable/>
     </div>
     <div class="col q-ml-xl">
-      <q-date v-model="model" range />
+      <date-picker></date-picker>
     </div>
   </div>
   <div class="row q-ml-xl">
@@ -35,6 +35,7 @@ import EcommerceTable from '../components/EcommerceTable.vue'
 import SummaryTable from '../components/SummaryTable.vue'
 import store from "@/store/"
 import Widgets from '../components/Widgets.vue'
+import DatePicker from '../components/DatePicker.vue'
 
 export default {
   
@@ -52,7 +53,8 @@ export default {
   components: {
     EcommerceTable,
         SummaryTable,
-        Widgets
+        Widgets,
+    DatePicker
   },
   data () {
     return {

@@ -19,11 +19,12 @@ export default {
     }
   },
   actions: {
-    addCategory: async ({commit, state}, data) => {
+    addCategory: async ({commit,dispatch, state}, data) => {
       try{
         const resp = await api.addCategory(data)
         console.log('Была добавлена категория', resp)
         commit('ADD_CATEGORY', resp.data)
+        dispatch('getCategories', {})
         console.log('новый список категорий в сторе', state.categories)
       } catch (e) {
         console.log('Ошибка добавления категории', e)
@@ -34,7 +35,7 @@ export default {
       try{
         await api.deleteCategory(data)
         console.log('Была удалена категория', data)
-        dispatch('getInitialData') // хорошо бы избавиться от этого решения, так как генерируется лишний запрос
+        dispatch('getCategories', {})
         console.log('новый список категорий в сторе', state.categories)
       } catch (e) {
         console.log('Ошибка удаления категории', e)
@@ -45,7 +46,7 @@ export default {
       try{
         await api.editCategory(data)
         console.log('Была отредактирована категория', data)
-        dispatch('getInitialData') // хорошо бы избавиться от этого решения, так как генерируется лишний запрос
+        dispatch('getCategories', {})
         console.log('новый список категорий в сторе', state.categories)
       } catch (e) {
         console.log('Ошибка редактирования категории', e)
@@ -58,7 +59,16 @@ export default {
       newCategory.transactions_sum = +newCategory.transactions_sum + +data.amount 
       const newCategories = state.categories.splice(index, 1, newCategory)
       commit('UPDATE_CATEGORIES', newCategories) // работает, скорее всего можно написать лучше
-    }
+    },
+    getCategories: async ({commit}, data) => {
+      try {
+        const categories = await api.getCategories(data).then(r => r.data)
+        commit('GET_CATEGORIES', categories)
+      }
+      catch (e) {
+        console.log('Ошибка в store/categories/getCategories', e)
+      }
+    },
   },
   getters : {
   }

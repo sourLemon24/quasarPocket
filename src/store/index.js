@@ -23,13 +23,13 @@ const store = new Vuex.Store({
     auth, categories, transactions, widgets
   },
   actions: {
-    getInitialData: async ({commit}) => {
+    getInitialData: async ( {commit} ) => {
       try {
         const username = await api.getUser().then(r => r.data.username)
         commit('GET_USERNAME', username)
-        const categories = await api.getCategory().then(r => r.data)
+        const categories = await api.getCategories({}).then(r => r.data)
         commit('GET_CATEGORIES', categories)
-        const transactions = await api.getTransactions().then(r => r.data)
+        const transactions = await api.getTransactions({}).then(r => r.data)
         commit('GET_TRANSACTIONS', transactions)
         const widgets = await api.getWidgets().then(r => r.data)
         commit('GET_WIDGETS', widgets)

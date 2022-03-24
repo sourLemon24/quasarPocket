@@ -50,7 +50,15 @@ export default {
         throw e
       }
     },
-
+    getTransactions: async ( {commit}, data ) => {
+      try {
+        const transactions = await api.getTransactions(data).then(r => r.data)
+        commit('GET_TRANSACTIONS', transactions)
+      }
+      catch (e) {
+        console.log('Ошибка в store/getInitialData', e)
+      }
+    }
   },
   getters : {
   }

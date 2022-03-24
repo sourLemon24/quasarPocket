@@ -37,6 +37,7 @@
 <script>
   export default {
     mounted() {
+      console.log('color', this.color)
       console.log('deepColor', this.deepColor)
     },
     props: {
@@ -74,7 +75,7 @@
           'ошибка';
       },
       deepColor() {
-        return 'grey' 
+        return this.color.slice(0,1) + this.color.slice(2,3) + this.color.slice(4,5) + this.color.slice(6,7)
       }
 
     },
