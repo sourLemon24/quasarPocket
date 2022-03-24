@@ -1,7 +1,8 @@
 <template>
   <div>
     <q-table
-      class="summary-table"
+      class="q-ml-xl summary-table q-ma-sm"
+      card-class="bg-grey-1"
       :data="$store.state.categories.categories"
       :columns="columns"
       row-key="name"

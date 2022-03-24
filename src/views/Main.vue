@@ -4,13 +4,13 @@
     <div class="col-8">
       <h3 class="text-grey-8 q-ml-xl">Pockets</h3>
     </div>
-    <div class="col flex justify-center items-center">
+    <div class="q-ml-xl col flex justify-start items-center">
       <q-avatar color="orange" text-color="white" font-size="40px" icon="account_circle" />
       <h6 class="text-grey-8 q-ml-sm">Hi, {{$store.state.auth.username}}</h6>
     </div>
   </div>
   <div class="row q-ml-xl">
-    <div class="col-8 flex justify-between no-wrap">
+    <div class="col-8 flex no-wrap content-start ovh">
       <EcommerceTable/>
       <SummaryTable/>
     </div>

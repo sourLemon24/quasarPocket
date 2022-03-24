@@ -1,12 +1,19 @@
 <template>
   <div>
-    <div class="add-widget-buttons q-ma-sm flex column ">
+    <div class=" row q-ma-sm flex add-widget-buttons justify-center">
       <q-btn
-        class="full-width q-py-md q-ma-xs"
-        icon="arrow_forward" />
+        class="col-6 q-py-md"
+        icon="arrow_back"
+        :disable="previousDisable"
+        @click="$emit('previous-widgets-frame')" />
+      <q-btn
+        class="col-6 q-py-md"
+        icon="arrow_forward"
+        :disable="nextDisable"
+        @click="$emit('next-widgets-frame')" />
       <q-btn
         @click="showModal"
-        class="full-width q-py-md q-ma-xs"
+        class="col-12 full-width q-py-md q-ma-xs"
         label="Add widget" />
     </div>
   </div>
@@ -16,6 +23,10 @@
   import store from "@/store/"
 
   export default {
+    props: {
+      nextDisable: Boolean,
+      previousDisable: Boolean
+    },
     data() {
       return {
       }

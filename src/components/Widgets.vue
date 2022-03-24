@@ -1,11 +1,16 @@
 <template>
 <div>
-    <div class="flex widgets-wrapper">
-      <widget
-        v-for="item in widgetsList"
-        :key="item.id"
-        v-bind="item"/>
-      <add-widget-buttons></add-widget-buttons>
+  <div class="flex widgets-wrapper column content-start">
+    <widget
+      v-for="(item, index) in widgetsList"
+      :key="item.id"
+      :currentIndex="index + widgetsFrameCurrentFirst * 2 + 1"
+      v-bind="item"/>
+    <add-widget-buttons
+      @next-widgets-frame="widgetsFrameCurrentFirst += 1"
+      @previous-widgets-frame="widgetsFrameCurrentFirst -= 1"
+      :nextDisable="nextDisableButton"
+      :previousDisable="previousDisableButton" />
   </div>
       <BaseModal
         widget
@@ -43,7 +48,9 @@ export default {
   },
   data() {
     return {
-      widget: initialWidget()
+      widget: initialWidget(),
+      widgetsFrameCurrentFirst: 0,
+
     }
   },
   computed: {
@@ -57,7 +64,16 @@ export default {
       .filter(item => item.category == 'expense')
     },
     widgetsList() {
-      return this.$store.state.widgets.widgets
+      return this.$store.state.widgets.widgets.slice(this.widgetsFrameCurrentFirst*2, this.widgetsFrameCurrentFirst*2 + 5)
+    },
+    widgetsFrameLast() {
+      return Math.ceil(this.$store.state.widgets.widgets.length/2)
+    },
+    previousDisableButton() {
+      return this.widgetsFrameLast < 3 || this.widgetsFrameCurrentFirst === 0
+    },
+    nextDisableButton() {
+      return this.widgetsFrameCurrentFirst + 2 >= this.widgetsFrameLast
     }
   },
   methods:{

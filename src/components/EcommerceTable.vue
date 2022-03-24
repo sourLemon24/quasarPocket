@@ -1,7 +1,8 @@
 <template>
 <div>
     <q-table
-    class="eccomerce-table"
+    class="eccomerce-table q-ma-sm"
+    card-class="bg-grey-1"
     :data="$store.state.transactions.transactions"
     :columns="columns"
     row-key="name"
@@ -63,6 +64,7 @@
       :transactionDate.sync="transactionDate"
       :amount.sync="amount"
       :categoryId.sync="categoryId"
+      :optionsSelect="options"
       @clearModalValue="clearModalValue"
       @click="addTransaction"
     />
