@@ -6,7 +6,7 @@ export default {
     const resp = await instance.post('auth/token/obtain/', 
       data, 
       {skipAuth: true})
-    console.log('sign in resp', resp)
+    // console.log('sign in resp', resp)
     return resp
   },
   
@@ -20,7 +20,7 @@ export default {
   
   refreshToken: async function (data) {
     try {
-      console.log('refreshToken in instance', data)
+      // console.log('refreshToken in instance', data)
       const resp = await instance.post('auth/token/refresh/', 
         data,
         {skipAuth: true} 
@@ -54,7 +54,6 @@ export default {
   
   getTransactions: async function ({limit = 1000, offset = 0, start_date = '1900-01-01', end_date = '2100-01-01'}) {
     const params = {limit, offset, start_date, end_date}
-    console.log('params', params)
     return instance.get('pockets/transactions/',
       {params})
   },

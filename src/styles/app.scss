@@ -9,6 +9,20 @@
     box-sizing: border-box;
 };
 
+::-webkit-scrollbar {
+  width: 5px; /* ширина нового скроллбара */
+} 
+
+::-webkit-scrollbar-track {
+  background: lightgrey; /* цвет фона у дорожки */
+}
+
+::-webkit-scrollbar-thumb {
+  background: black; /* цвет фона у дорожки */
+  border-radius: 8px; /* скругление углов */
+  border: 1px solid #ffffff; /* толщина, стиль и цвет рамки */
+}
+
 body {
     margin: 0;
     width: 1440px;
@@ -44,18 +58,14 @@ a {
     }
 }
 
-.q-table thead {
-  background-color: #F3F2F7;
-}
-
 .eccomerce-table {
   width: 580px;
-  height: 453px;
+  max-height: 453px;
 }
 
 .summary-table {
   width: 303px;
-  height: 453px;
+  max-height: 453px;
   td{
     cursor: pointer;
   }
@@ -74,7 +84,7 @@ a {
 }
 
 .widget-card {
-  width: 305px;
+  width: 250px;
   height: 153px;
 }
 
@@ -90,4 +100,36 @@ a {
 
 .color-picker {
   width: 200px;
+}
+
+.global {
+  width: 290px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 1px lightgrey;
+  .date {
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 1px lightgrey;
+  }
+}
+
+.my-sticky-header-table {
+
+  
+  .q-table__middle {
+    thead tr:first-child th {
+      /* bg color is important for th; just specify one */
+    background-color: #F3F2F7;
+    }
+    
+
+    thead tr th {
+      position: sticky;
+      z-index: 1;
+    }
+
+    thead tr:first-child th {
+      
+      top: 0
+    }
+  }   
 }

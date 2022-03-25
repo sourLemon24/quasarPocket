@@ -37,8 +37,6 @@
 <script>
   export default {
     mounted() {
-      console.log('color', this.color)
-      console.log('deepColor', this.deepColor)
     },
     props: {
       validity: {

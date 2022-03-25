@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-table
-      class="q-ml-xl summary-table q-ma-sm"
+      class="q-ml-xl summary-table my-sticky-header-table q-ma-sm"
       card-class="bg-grey-1"
       :data="$store.state.categories.categories"
       :columns="columns"

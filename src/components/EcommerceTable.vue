@@ -1,7 +1,7 @@
 <template>
 <div>
     <q-table
-    class="eccomerce-table q-ma-sm"
+    class="my-sticky-header-table eccomerce-table q-ma-sm"
     card-class="bg-grey-1"
     :data="$store.state.transactions.transactions"
     :columns="columns"
@@ -25,15 +25,13 @@
         <q-td>
           {{props.row.amount}}
         </q-td>
-        <q-td>
+        <q-td class="flex justify-around">
           <q-btn 
             flat 
             style="color: green" 
             label="Edit" 
             @click="showModalEdit(props)"/>
-        </q-td>
-        <q-td>
-          <q-btn 
+            <q-btn 
             flat 
             style="color: #FF0080" 
             label="Delete" 
@@ -131,14 +129,7 @@ export default {
           align: 'center',
           field: 'editCategory',
           format:  val => `${val || ''}`,
-        },
-        {
-          name: 'deleteCategory',
-          required: true,
-          align: 'center',
-          field: 'deleteCategory',
-          format:  val => `${val || ''}`,
-        },        
+        },      
       ],
 
     }

@@ -8,7 +8,7 @@ export default {
   mutations: {
     GET_CATEGORIES: (state, resp) => {
       state.categories = resp
-      console.log('категории, полученыые от сервера через cocтояние', state.categories)
+      // console.log('категории, полученыые от сервера через cocтояние', state.categories)
     },
     ADD_CATEGORY: (state, data) => {
       state.categories.splice(0, 0, data)

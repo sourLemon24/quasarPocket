@@ -229,19 +229,15 @@
         this.$emit('update:showModal', value)
       },
       updateColor(value) {
-        console.log('update color value', value)
         this.$emit('update:color', value)
       },
       updateCriterion(value) {
-        console.log('update criterion value', value)
         this.$emit('update:criterion', value)
       },
       updateLimit(value) {
-        console.log('update limit value', value)
         this.$emit('update:limit', value)
       },
       updateValidity(value) {
-        console.log('update validity value', value)
         this.$emit('update:validity', value)
       },
       editButtonEvent() {

@@ -9,7 +9,7 @@ export default {
   mutations: {
     GET_WIDGETS: (state, resp) => {
       state.widgets = resp
-      console.log('виджеты, полученыые от сервера через cocтояние', state.widgets)
+      // console.log('виджеты, полученыые от сервера через cocтояние', state.widgets)
     },
     ADD_WIDGET: (state, data) => {
       state.widgets.splice(0, 0, data)

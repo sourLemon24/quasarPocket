@@ -1,33 +1,26 @@
 <template >
-<div>
-  <div class="row q-ml-xl">
-    <div class="col-8">
-      <h3 class="text-grey-8 q-ml-xl">Pockets</h3>
+<div class="row wrap q-ml-xl flex justify-center">
+    <div class="col-sm-8">
+      <h3 class="text-grey-8">Pockets</h3>
     </div>
-    <div class="q-ml-xl col flex justify-start items-center">
+    <div class=" col-sm-4 flex justify-start items-center q-pl-xl">
       <q-avatar color="orange" text-color="white" font-size="40px" icon="account_circle" />
       <h6 class="text-grey-8 q-ml-sm">Hi, {{$store.state.auth.username}}</h6>
     </div>
-  </div>
-  <div class="row q-ml-xl">
-    <div class="col-8 flex no-wrap content-start ovh">
+    <div class="col-sm-8 flex justify-around">
       <EcommerceTable/>
       <SummaryTable/>
     </div>
-    <div class="col q-ml-xl">
+    <div class="col-sm-4 q-pl-xl">
       <date-picker></date-picker>
     </div>
-  </div>
-  <div class="row q-ml-xl">
-    <div class="col-8">
+    <div class="col-sm-8">
       <widgets/>
     </div>
-    <div class="col q-ml-xl">
-      Global
+    <div class="col-sm-4 q-pl-xl">
+      <global></global>
     </div>
   </div>
-</div>
-
 </template>
 
 <script>
@@ -36,6 +29,7 @@ import SummaryTable from '../components/SummaryTable.vue'
 import store from "@/store/"
 import Widgets from '../components/Widgets.vue'
 import DatePicker from '../components/DatePicker.vue'
+import Global from '../components/Global.vue'
 
 export default {
   
@@ -54,7 +48,8 @@ export default {
     EcommerceTable,
         SummaryTable,
         Widgets,
-    DatePicker
+    DatePicker,
+    Global
   },
   data () {
     return {

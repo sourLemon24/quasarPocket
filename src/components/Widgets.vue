@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="flex widgets-wrapper column content-start">
+  <div class="flex widgets-wrapper column flex-center">
     <widget
       v-for="(item, index) in widgetsList"
       :key="item.id"
